@@ -15,26 +15,34 @@ class CurrencyConverter:
         if not self._url:
             self._url = f'https://v6.exchangerate-api.com/v6/{self.token}/latest/{self.currency}'
         return self._url
-    @property
     
-    def input_currency_to_exchange(self):
+    
+
+    
+    
+        
+    def get_currency_to_exchange(self) -> list:
         if not self._currency:
-            self._currency = input('number value value').split()
-        return self._currency[1]
+            self._currency = input('one to two ').split()
+        return self._currency
     
+    
+    @property
     def currency(self) -> str:
-        input_currency_to_exchange(self)
-        return self._currency[1]
-    
+        return self.get_currency_to_exchange()[2]
+        
     
 #10000 pln usd
-    def convert(self):   
+    def convert(self) -> None:   
         response = requests.get(self.url)
         data = response.json()
         print("Exchange Rates:")
         for rate in data['conversion_rates']:
-            if self._currency[0] == rate:
-                print(f"1 {self._currency[1]} its {data['conversion_rates'][rate]} {rate} ")
+            if self._currency[1] == rate:
+                print(f"{int(self._currency[0])/data['conversion_rates'][rate]} {self._currency[2]}")
+                # 1 USD its 3.9088 PLN 
+                # print(f"1 {self._currency[2]} its {data['conversion_rates'][rate]} {rate} ")
+
 
 if __name__ == '__main__':
     try:        
@@ -43,6 +51,6 @@ if __name__ == '__main__':
             converter.convert()
                 
     except Exception as e:
-        print(f'Closing')
+        print(f'Closing {e}')
 
             
